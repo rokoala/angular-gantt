@@ -6,7 +6,7 @@
         // If the To date is the first day of month and the time is 00:00 then no new column is generated for this month.
 
         var isToDateToExclude = function(to, value, unit) {
-            return moment(to).add(value, unit).startOf(unit) === to;
+            return moment(to).utc().add(value, unit).startOf(unit) === to;
         };
 
 
@@ -71,7 +71,7 @@
                 }
 
                 var startDate = moment(date);
-                var endDate = moment(startDate).add(viewScaleValue, viewScaleUnit);
+                var endDate = moment(startDate).utc().add(viewScaleValue, viewScaleUnit);
                 ensureNoUnitOverflow(viewScaleUnit, startDate, endDate);
 
                 var column = builder.newColumn(startDate, endDate, leftOffset ? left + leftOffset : left, columnWidth);

@@ -36,7 +36,7 @@
                 }
 
                 if (direction === 'left') {
-                    from = moment(date).add(-5 * viewScaleValue, viewScaleUnit);
+                    from = moment(date).utc().add(-5 * viewScaleValue, viewScaleUnit);
                     $scope.fromDate = from;
                 } else {
                     to = moment(date).add(5 * viewScaleValue, viewScaleUnit);
@@ -104,4 +104,3 @@
         return builder.build();
     }]);
 }());
-

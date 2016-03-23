@@ -329,7 +329,7 @@
                     cTimeFrame.end.date(dateDate);
 
                     if (moment(cTimeFrame.end).startOf('day') === cTimeFrame.end) {
-                        cTimeFrame.end.add(1, 'day');
+                        cTimeFrame.end.utc().add(1, 'day');
                     }
                 }
 

@@ -47,7 +47,7 @@
             if (self.calendar !== undefined && (self.timeFramesNonWorkingMode !== 'hidden' || self.timeFramesWorkingMode !== 'hidden')) {
                 var cDate = self.date;
                 var cDateStartOfDay = moment(cDate).startOf('day');
-                var cDateNextDay = cDateStartOfDay.add(1, 'day');
+                var cDateNextDay = cDateStartOfDay.utc().add(1, 'day');
                 var i;
                 while (cDate < self.endDate) {
                     var timeFrames = self.calendar.getTimeFrames(cDate);
@@ -89,7 +89,7 @@
 
                     cDate = nextCDate;
                     cDateStartOfDay = moment(cDate).startOf('day');
-                    cDateNextDay = cDateStartOfDay.add(1, 'day');
+                    cDateNextDay = cDateStartOfDay.utc().add(1, 'day');
                 }
 
                 for (i=0; i < self.timeFrames.length; i++) {
@@ -274,7 +274,7 @@
                 var timeFrame = this.timeFrames[i];
                 if (!timeFrame.cropped && position >= timeFrame.left && position <= timeFrame.left + timeFrame.width) {
                     var positionDuration = timeFrame.getDuration() / timeFrame.width * (position - timeFrame.left);
-                    var date = moment(timeFrame.start).add(positionDuration, 'milliseconds');
+                    var date = moment(timeFrame.start).utc().add(positionDuration, 'milliseconds');
                     return date;
                 }
             }
@@ -297,7 +297,7 @@
 
             if (date === undefined) {
                 positionDuration = this.duration / this.width * position;
-                date = moment(this.date).add(positionDuration, 'milliseconds');
+                date = moment(this.date).utc().add(positionDuration, 'milliseconds');
             }
 
             date = this.getMagnetDate(date, magnetValue, magnetUnit, timeFramesMagnet);
@@ -355,4 +355,3 @@
         return Column;
     }]);
 }());
-

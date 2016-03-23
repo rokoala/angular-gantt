@@ -721,7 +721,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
                     cTimeFrame.end.date(dateDate);
 
                     if (moment(cTimeFrame.end).startOf('day') === cTimeFrame.end) {
-                        cTimeFrame.end.add(1, 'day');
+                        cTimeFrame.end.utc().add(1, 'day');
                     }
                 }
 
@@ -965,7 +965,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
             if (self.calendar !== undefined && (self.timeFramesNonWorkingMode !== 'hidden' || self.timeFramesWorkingMode !== 'hidden')) {
                 var cDate = self.date;
                 var cDateStartOfDay = moment(cDate).startOf('day');
-                var cDateNextDay = cDateStartOfDay.add(1, 'day');
+                var cDateNextDay = cDateStartOfDay.utc().add(1, 'day');
                 var i;
                 while (cDate < self.endDate) {
                     var timeFrames = self.calendar.getTimeFrames(cDate);
@@ -1007,7 +1007,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
 
                     cDate = nextCDate;
                     cDateStartOfDay = moment(cDate).startOf('day');
-                    cDateNextDay = cDateStartOfDay.add(1, 'day');
+                    cDateNextDay = cDateStartOfDay.utc().add(1, 'day');
                 }
 
                 for (i=0; i < self.timeFrames.length; i++) {
@@ -1192,7 +1192,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
                 var timeFrame = this.timeFrames[i];
                 if (!timeFrame.cropped && position >= timeFrame.left && position <= timeFrame.left + timeFrame.width) {
                     var positionDuration = timeFrame.getDuration() / timeFrame.width * (position - timeFrame.left);
-                    var date = moment(timeFrame.start).add(positionDuration, 'milliseconds');
+                    var date = moment(timeFrame.start).utc().add(positionDuration, 'milliseconds');
                     return date;
                 }
             }
@@ -1215,7 +1215,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
 
             if (date === undefined) {
                 positionDuration = this.duration / this.width * position;
-                date = moment(this.date).add(positionDuration, 'milliseconds');
+                date = moment(this.date).utc().add(positionDuration, 'milliseconds');
             }
 
             date = this.getMagnetDate(date, magnetValue, magnetUnit, timeFramesMagnet);
@@ -1274,7 +1274,6 @@ Github: https://github.com/angular-gantt/angular-gantt.git
     }]);
 }());
 
-
 (function() {
     'use strict';
     angular.module('gantt').factory('GanttColumnBuilder', ['GanttColumn', function(Column) {
@@ -1304,7 +1303,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
         // If the To date is the first day of month and the time is 00:00 then no new column is generated for this month.
 
         var isToDateToExclude = function(to, value, unit) {
-            return moment(to).add(value, unit).startOf(unit) === to;
+            return moment(to).utc().add(value, unit).startOf(unit) === to;
         };
 
 
@@ -1369,7 +1368,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
                 }
 
                 var startDate = moment(date);
-                var endDate = moment(startDate).add(viewScaleValue, viewScaleUnit);
+                var endDate = moment(startDate).utc().add(viewScaleValue, viewScaleUnit);
                 ensureNoUnitOverflow(viewScaleUnit, startDate, endDate);
 
                 var column = builder.newColumn(startDate, endDate, leftOffset ? left + leftOffset : left, columnWidth);
@@ -1912,7 +1911,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
             while (true) {
                 var currentPosition = currentColumn.getPositionByDate(currentDate);
 
-                var endDate = moment.min(moment(currentDate).add(viewScaleValue, viewScaleUnit), maximumDate);
+                var endDate = moment.min(moment(currentDate).utc().add(viewScaleValue, viewScaleUnit), maximumDate);
 
                 var column = columnsManager.getColumnByDate(endDate, true);
 
@@ -1991,7 +1990,6 @@ Github: https://github.com/angular-gantt/angular-gantt.git
         };
     }]);
 }());
-
 
 (function() {
     'use strict';
@@ -4400,7 +4398,7 @@ Github: https://github.com/angular-gantt/angular-gantt.git
                 }
 
                 if (direction === 'left') {
-                    from = moment(date).add(-5 * viewScaleValue, viewScaleUnit);
+                    from = moment(date).utc().add(-5 * viewScaleValue, viewScaleUnit);
                     $scope.fromDate = from;
                 } else {
                     to = moment(date).add(5 * viewScaleValue, viewScaleUnit);
@@ -4468,7 +4466,6 @@ Github: https://github.com/angular-gantt/angular-gantt.git
         return builder.build();
     }]);
 }());
-
 
 (function(){
     'use strict';

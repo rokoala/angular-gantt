@@ -28,7 +28,7 @@
             while (true) {
                 var currentPosition = currentColumn.getPositionByDate(currentDate);
 
-                var endDate = moment.min(moment(currentDate).add(viewScaleValue, viewScaleUnit), maximumDate);
+                var endDate = moment.min(moment(currentDate).utc().add(viewScaleValue, viewScaleUnit), maximumDate);
 
                 var column = columnsManager.getColumnByDate(endDate, true);
 
@@ -107,4 +107,3 @@
         };
     }]);
 }());
-
